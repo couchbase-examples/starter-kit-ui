@@ -1,0 +1,62 @@
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<script src="scripts.js"></script>
+<link rel="stylesheet" href="styles.css">
+
+<table style="width:100%;border-width:1px">
+  <tr>
+    <td>
+      <form id="form" class="form"
+            onsubmit="return setAction(this,'/api/hotels/'+(form.desc.value === '' ? 'breakfast': form.desc.value) + '/' + (form.location.value === ''? 'California' : form.location.value)  + '/')">
+        <table style="width:100%">
+          <tr>
+            <td style="width:10%"><h4>Full Text</h4></td>
+            <td style="width:100%">Full text search of hotels on country, city, state, address, name, description</td>
+          </tr>
+          <tr>
+            <td>
+              <label for="desc">Description</label>
+            </td>
+            <td>
+              <input type="text" id="desc" name="desc" placeholder="breakfast"/>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="location">Location</label>
+            </td>
+            <td>
+              <input type="text" id="location" name="location" placeholder="California"/>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="submit" value="Submit"/>
+            </td>
+          </tr>
+          <tr>
+            <td style="color:white">.</td>
+            <td style="width:100%">
+              <table>
+                <tr>
+                  <td class="border1" id="myoutput"></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </td>
+  </tr>
+  <tr>
+    <td style="width:100%" span="2">
+      <table style="width:100%">
+        <tr>
+          <td style="width:100%" id="narrative"></td>
+        </tr>
+        <tr>
+          <td style="width:100%" id="code"></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

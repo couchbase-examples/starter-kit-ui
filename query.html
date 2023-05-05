@@ -1,0 +1,108 @@
+
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<script src="scripts.js"></script>
+<link rel="stylesheet" href="styles.css">
+
+<script>
+  let fromAirports = [];
+  let toAirports = [];
+
+  async function checkAirport(airport, airports) {
+    let url = '/api/airports?search=' + airport;
+    await fetch(
+        url, {headers: {"Content-Type": "application/json"}, method: "GET"})
+        .then(response => response.json())
+        .then((json) => {
+          if (json.data != null) {
+            for (let i = 0; i < json.data.length; i++) {
+              airports[i] = json.data[i]["airportname"];
+            }
+            for (let j = json.data.length; j < airports.length; j++) {
+              airports[j] = null;
+            }
+          }
+          constructRows(json.context, document.getElementById("narrative"));
+          codeLink(json.code, document.getElementById("code"));
+        });
+    return airport;
+  }
+</script>
+
+<table style="width:100%;border-width:1px">
+  <tr>
+    <td>
+      <form class="form" id="form" autocomplete="off"
+            onsubmit="return setAction(this, '/api/flightPaths/' +(form.from.value == '' ? 'Los Angeles Intl' : form.from.value) + '/' + (form.to.value == ''? 'San Francisco Intl' : form.to.value)  + '?leave='+(form.date.value == ''? '05/25/2023' : form.date.value))">
+        <table style="width:100%">
+          <tr>
+            <td style="width:10%"><h4>Query</h4></td>
+            <td style="width:100%">Find flights from one airport to another on a given day.
+              The airport name fields are auto-completion. The airport names are used to lookup
+              the airport FAA codes which are used to locate flights.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="from">From</label>
+            </td>
+            <td>
+              <div class="autocomplete" style="width:300px;">
+                <input type="text" id="from" name="from" placeholder="Los Angeles Intl"/>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="to">To</label>
+            </td>
+            <td>
+              <div class="autocomplete" style="width:300px;">
+                <input type="text" id="to" name="to" placeholder="San Francisco Intl"/>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="date">Date</label>
+            </td>
+            <td>
+              <input type="text" id="date" name="date" placeholder="05/25/2023"/>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="submit" value="Submit"/>
+            </td>
+          </tr>
+          <tr>
+            <td style="color:white">.</td>
+            <td style="width:100%">
+              <table>
+                <tr>
+                  <td class="border1" id="myoutput"></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </td>
+  </tr>
+  <tr>
+    <td style="width:100%" span="2">
+      <table style="width:100%">
+        <tr>
+          <td style="width:100%" id="narrative"></td>
+        </tr>
+        <tr>
+          <td style="width:100%" id="code"></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<script>
+    autocomplete(document.getElementById("from"), fromAirports);
+    autocomplete(document.getElementById("to"), toAirports);
+</script>
