@@ -70,7 +70,7 @@ th, td  {
     border: 1px solid #ddd;
 }
 th {
-    background: linear-gradient(135deg, #6b6bff, #0080ff);/*linear-gradient(to bottom, #f2f2f2, #e6e6e6);*/
+    background: linear-gradient(135deg,  #fc9d04, #ee5164);/*linear-gradient(to bottom, #f2f2f2, #e6e6e6);*/
     border-top: none;
     border-bottom: 1px solid #ddd;
     font-weight: bold;

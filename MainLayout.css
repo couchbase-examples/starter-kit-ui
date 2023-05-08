@@ -9,8 +9,8 @@ main {
 }
 
 .sidebar {
-    background: linear-gradient(135deg,  #6b6bff, #0080ff);
-    width: 180px;
+    background: linear-gradient(135deg, #fc9d04, #ee5164);
+    width: 170px;
     height: 100vh;
     position: sticky;
     top: 0;

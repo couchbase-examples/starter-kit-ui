@@ -16,7 +16,7 @@ function constructTable(list, selector) {
     if (list != null && list.length > 0) {
         var cols = Headers(list, selector);
         for (var i = 0; i < list.length; i++) {
-            var clr = i % 2 == 0 ? "#DDFFDD" : "#DDDDFF";
+            var clr = i % 2 == 0 ? "#F8B878" : "#EFA898";
             var row = $('<tr style="background-color:' + clr + '"/>');
             for (var colIndex = 0; colIndex < cols.length; colIndex++) {
                 row.append($('<td/>').html(val = list[i][cols[colIndex]]));
@@ -55,12 +55,14 @@ function Headers(list, selector) {
 }
 
 function codeLink(list, selector) {
-    $(selector).html("");
-    let a = document.createElement('a');
-    a.appendChild(document.createTextNode("code"));
-    a.href = list;
-    a.target = "_blank";
-    $(selector).append(a);
+    if(list !== undefined){
+      $(selector).html("");
+      let a = document.createElement('a');
+      a.appendChild(document.createTextNode("code"));
+      a.href = list;
+      a.target = "_blank";
+      $(selector).append(a);
+    }
 }
 
 function autocomplete(inp, arr) {
