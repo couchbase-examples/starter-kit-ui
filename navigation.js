@@ -6,7 +6,7 @@ async function navigation(selector) {
 
     html =
         '<div class="sidebar">' +
-        '<div class="top-row ps-3 navbar navbar-dark" style="height:180px;width:175px;justify-content:left">' +
+        '<div class="top-row ps-3 navbar navbar-dark" style="height:180px;width:170px;justify-content:left">' +
         '<a class="navbar-brand"  style="color:black"  href="http://www.couchbase.com" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;Couchbase</a>' +
         '<img src="favicon.ico"/>' +
         '</div>' +
