@@ -2,6 +2,22 @@ window.onload = function () {
     navigation(document.getElementById("navigation"));
 }
 
+/*
+ * Probe a starter-kit API endpoint and report whether the backend can serve it.
+ * Returns false (never throws) when the request fails, the response is not JSON,
+ * the payload has no `context`, or the backend reports 'Not Connected', so the
+ * sidebar always renders and falls back to the setup instructions link.
+ */
+async function probeBackend(url) {
+    try {
+        const response = await fetch(url, {headers: {"Content-Type": "application/json"}, method: "GET"});
+        const json = await response.json();
+        return json.context === undefined ? false : (json.context.length == 0 || json.context[0] !== 'Not Connected');
+    } catch (e) {
+        return false;
+    }
+}
+
 async function navigation(selector) {
 
     html =
@@ -17,13 +33,7 @@ async function navigation(selector) {
         'onClick="parent.right.location=\'welcome.html\'">Welcome</a>' +
         '</div>';
 
-    let connected = await fetch(
-        'api/hotels/byid/hotel_10180/', {headers: {"Content-Type": "application/json"}, method: "GET"})
-        .then(response => response.json())
-        .then((json) => {
-                return json.context === undefined ? false : (json.context.length == 0 || json.context[0] !== 'Not Connected');
-            }
-        );
+    let connected = await probeBackend('api/hotels/byid/hotel_10180/');
 
     if (connected) {
         html = html +
@@ -37,13 +47,7 @@ async function navigation(selector) {
             '</div>';
 
 
-        let hasFtsIndex = await fetch(
-            'api/hotels/pool/California/', {headers: {"Content-Type": "application/json"}, method: "GET"})
-            .then(response => response.json())
-            .then((json) => {
-                    return json.context === undefined ? false : (json.context.length == 0 || json.context[0] !== 'Not Connected');
-                }
-            );
+        let hasFtsIndex = await probeBackend('api/hotels/pool/California/');
 
         if (hasFtsIndex) {
             html = html + ('<div class="nav-item px-3">' +
